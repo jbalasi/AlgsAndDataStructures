@@ -14,9 +14,18 @@ public class SudokuToSatReducerBalasi {
 	TimerBalasi timer = new TimerBalasi();
 	int width, height;
 	String  tempFileName  = "temp.cnf";
-	Writer  writer;
-	writer= new PrintWriter(tempFileName);
-	boolean compare;
+//	try {
+//		Writer  writer=new PrintWriter("SATFile.txt");
+//	}catch(IOException e) {
+//		
+//	}
+	
+	int compare, row, column, value;
+	int boardSize = 9;
+	
+	public  SudokuToSatReducerBalasi() {
+		//for testing
+	}
 	 
 	public SudokuToSatReducerBalasi(File file) {
 		createBoard(file);
@@ -45,6 +54,7 @@ public class SudokuToSatReducerBalasi {
 				for(int i=0; i<board.boardCells.length; i++) {
 					int num = Integer.parseInt(scan.next());
 					board.boardCells[i]=num;
+					
 				}
 				break;
 				}	
@@ -58,46 +68,93 @@ public class SudokuToSatReducerBalasi {
 
 	public void reduceBoard() {
 		timer.start();//call timer start 
-		atleastOneInRow(boardCells);
-		atmostOneInRow(boardCells);
-		atLeastOneInCol(boardCells);
-		atleastOneInBox(boardCells);
-		atmostOneInBox(boardCells);
+//		atleastOneInRow();
+//		atmostOneInRow();
+//		atLeastOneInCol();
+//		atMostOneInCol();
+//		atleastOneInBox();
+//		atmostOneInBox();
 		timer.stop();//call timer stop
 		System.out.println("This ran for "+timer.getDuration()+"ms.");
 	}
 	
-	
-	public boolean atleastOneInRow(int[] boardCells) {
-		return compare;
+	//i = row, j= column, k=value
+	public void atleastOneInRow() {
+		for(int k=1; k<=boardSize; k++) {
+			for(int i=0; i<boardSize; i++) {
+				for(int j=0; j<boardSize; j++) {
+					System.out.print(String.valueOf(encode(i,j,k)) + " ");
+				}
+				System.out.print(" 0");
+				System.out.println("");
+			}
+		}
 	}
 	
 	
-	public boolean atmostOneInRow(int[] boardCells) {
-	
-		return compare;
+	public void atmostOneInRow() {						//check this
+			for(int i=0; i<boardSize; i++) {
+				for(int j=0; j<boardSize; j++) {
+					for(int k=9; k>0; k--) {
+						System.out.print(String.valueOf(encode(i,j,k))+" ");
+				}
+				System.out.print(" 0");
+				System.out.println("");	
+			}
+		}
 	}
 	
-	public boolean atLeastOneInCol(int[] boardCells) {
-		return compare;
+	public void atLeastOneInCol() {
+		for(int k=1; k<boardSize; k++) {
+			for(int j=0; j<boardSize; j++) {
+				for(int i=0; i<boardSize; i++) {
+					System.out.print(String.valueOf(encode(i,j,k)));
+				}
+				System.out.print(" 0");
+				System.out.println("");
+			}
+		}
 	}
 	
-	public boolean atleastOneInBox(int[] boardCells) {
-		return compare;
+	public void atMostOneInCol() {				//check this
+		for(int j=0; j<boardSize; j++) {
+			for(int i=0; i<boardSize; i++) {
+				for(int k=9; k>0; k--) {
+					System.out.print(String.valueOf(encode(i,j,k))+" ");
+			}
+			System.out.print(" 0");
+			System.out.println("");	
+		}
+	}
 	}
 	
-	public boolean atmostOneInBox(int[] boardCells) {
-		return compare;
+	public void atleastOneInBox() {
+	
+	}
+	
+	public void atmostOneInBox() {
+	
 	}	
 	
-	  void write (String str) {
+	private int encode(int i, int j, int k) {
+		return (i*boardSize*boardSize) +(j*boardSize)+k;
+	}
+	
+//	  void write (String str) {
+//
+//          try {
+//
+//               writer.write(str);
+//               writer.flush();
+//         }  catch(IOException  e)  { }
 
-          try {
-
-               writer.write(str);
-               writer.flush();
-         }  catch(IOException  e)  { }
-
+  public static void main(String[]args) {
+	  SudokuToSatReducerBalasi board = new SudokuToSatReducerBalasi();
+	 
+	 // board.atmostOneInRow();
+	 // board.atMostOneInCol();
+	 // board.atleastOneInRow();
+	 // board.atLeastOneInCol();
   }
 	
 }

@@ -14,7 +14,6 @@ public class MainBalasi {
 		else {
 			
 			File file = new File(args[0]);
-			SudokuBoardBalasi board = new SudokuBoardBalasi(file);
 			SudokuToSatReducerBalasi sudBoard = new SudokuToSatReducerBalasi(file);
 			sudBoard.createBoard(file);
 			sudBoard.reduceBoard();

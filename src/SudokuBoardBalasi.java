@@ -4,6 +4,7 @@ public class SudokuBoardBalasi {
 	
 	private int width, height, size, numberOfCells, value, boardSize,row, column;
 	int[] boardCells;
+	static File file;
 	
 	public SudokuBoardBalasi(int width, int height){
 		this.width=width;
@@ -57,11 +58,12 @@ public class SudokuBoardBalasi {
 		 StringBuilder sb = new StringBuilder();
 		 int size=this.width;
 		for(int i=0; i<this.boardCells.length; i++) {
-			sb.append(boardCells[i]);
+			sb.append(boardCells[i]);//why??????
 			if(i%size==0)
 				sb.append("\n");
 		}
 		 return sb.toString();
 	}
+
 	
 }
