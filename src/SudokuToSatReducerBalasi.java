@@ -1,4 +1,7 @@
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -9,11 +12,12 @@ import java.util.regex.Pattern;
 public class SudokuToSatReducerBalasi {
 	File file;
 	TimerBalasi timer = new TimerBalasi();
-	public int [] boardCells;
-	boolean compare=false;
-	public int width, height,totalWidth,totalHeight,row, column,numberOfCells;
-	
-	
+	int width, height;
+	String  tempFileName  = "temp.cnf";
+	Writer  writer;
+	writer= new PrintWriter(tempFileName);
+	boolean compare;
+	 
 	public SudokuToSatReducerBalasi(File file) {
 		createBoard(file);
 	}
@@ -33,16 +37,14 @@ public class SudokuToSatReducerBalasi {
 				
 			while(scan.findInLine(p)==null) { 
 			
-				width = Integer.parseInt(scan.next());
-				height = Integer.parseInt(scan.next());
-				totalWidth=width*width;
-				totalHeight=height*height;
+				this.width = Integer.parseInt(scan.next());
+				this.height = Integer.parseInt(scan.next());
 				
-				boardCells = new int [board.size(width,height)];
+				SudokuBoardBalasi board= new SudokuBoardBalasi(width, height);
 				
-				for(int i=0; i<boardCells.length; i++) {
+				for(int i=0; i<board.boardCells.length; i++) {
 					int num = Integer.parseInt(scan.next());
-					boardCells[i]=num;
+					board.boardCells[i]=num;
 				}
 				break;
 				}	
@@ -53,6 +55,7 @@ public class SudokuToSatReducerBalasi {
 		
 }
 	
+
 	public void reduceBoard() {
 		timer.start();//call timer start 
 		atleastOneInRow(boardCells);
@@ -66,14 +69,6 @@ public class SudokuToSatReducerBalasi {
 	
 	
 	public boolean atleastOneInRow(int[] boardCells) {
-		int i=0, j=0, x=1;
-		if(board.value(i, j)== board.value(i, x)) {//compare 1st with 2nd then 3rd ......
-			compare= true;
-		}
-		
-		
-		System.out.println(compare);
-		System.out.println(Arrays.toString(boardCells));
 		return compare;
 	}
 	
@@ -95,5 +90,14 @@ public class SudokuToSatReducerBalasi {
 		return compare;
 	}	
 	
+	  void write (String str) {
+
+          try {
+
+               writer.write(str);
+               writer.flush();
+         }  catch(IOException  e)  { }
+
+  }
 	
 }
