@@ -12,7 +12,6 @@ public class SudokuToSatReducerBalasi {
 	public int [] boardCells;
 	boolean compare=false;
 	public int width, height,totalWidth,totalHeight,row, column,numberOfCells;
-	SudokuBoardBalasi board= new SudokuBoardBalasi(file);
 	
 	
 	public SudokuToSatReducerBalasi(File file) {

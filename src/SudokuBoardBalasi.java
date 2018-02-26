@@ -2,124 +2,66 @@ import java.io.File;
 
 public class SudokuBoardBalasi {
 	
-	private int width, height, size, numberOfCells, value,totalWidth,totalHeight, boardSize,row, column;
-	File file;
+	private int width, height, size, numberOfCells, value, boardSize,row, column;
+	int[] boardCells;
 	
-	public SudokuBoardBalasi(File file){
-		int [] boardCells= new int[size(width, height)];
+	public SudokuBoardBalasi(int width, int height){
+		this.width=width;
+		this.height=height;
+		this.boardSize=width*height;
+		this.numberOfCells=boardSize*boardSize;
+		this.boardCells= new int[numberOfCells];
 	}
 
-	
-	//done this works correctly
-	public int size(int boxWidth, int boxHeight) {
-		int boardSize= (boxWidth*boxHeight)*(boxWidth * boxHeight);
-		return boardSize;
-		
-	}
-	//done this works correctly
 	public int row(int cellNumber) {//the row to which the cell belongs in the 2d form of the sudoku board
-		int row=0,j=0;
-		if(cellNumber <0) {
-			cellNumberError();
-		}else if(j>(totalWidth)) {
-			cellNumberError();
-		}else {
-			while(row<=cellNumber) {
-				row= row +(totalWidth);
-				j++;
-			}
-		}
-		row=j;
-		return row;
+		return cellNumber/boardSize;
 	}
-	//done this works correctly
+	
 	public int column(int cellNumber) {//the column to which the cell belongs in the 2d form of the soduku board
-		if(cellNumber <0) {
-			cellNumberError();
-		}else if(column >= totalHeight) {
-			cellNumberError();
-		}else {	
-			int column= (1+cellNumber%totalHeight);
-		}
-		return column;
+		return cellNumber%boardSize;
 	}
 	
 	//done this works correctly
-	public int value(int row, int column) {//the value in the cell at row, column
-		int value= ((row-1)*9)+(column-1);
-		return value;
+	public int value(int cellNumber) {//the value in the cell 
+		return boardCells[cellNumber];
 	}
 	//done
-	public int box(int row, int column) {//the box in which the cell lies in the 2d form of the soduku board???
+	public int box(int cellNumber) {//the box in which the cell lies in the 2d form of the soduku board???
 		int box=0;
-		if(row<=3) {
-			if(column <=3) {
-			box = 1;
-			}else if(column>3 && column <=6) {
-				box=2;
-			}else if(column>6 && column<=9) {
-				box=3;
-			}
-		}else if(row>3 && row<=6) {
-			if(column<=3) {
-				box=4;
-			}else if(column>3 && column <=6) {
-				box=5;
-			}else if(column>6 && column<=9) {
-				box=6;
-			}
-		}else if(row>6 && row<=9) {
-			if(column<=3) {
-				box=7;
-			}else if(column>3 && column <=6) {
-				box=8;
-			}else if(column>6 && column<=9) {
-				box=9;
-			}
-		}
+		
 		return box;
 	}
 	
 	//getters, setters and print
 	public int getBoxWidth() {
-		return totalWidth;
+		return width;
 	}
 	
 	public int getBoxHeight() {
-		return totalHeight;
+		return height;
 	}
 	
 	public int getBoardSize() {
-		return size;
+		return boardSize;
 	}
 	
 	public int getnumberOfCells() {
 		return numberOfCells;
 	}
-	//done
-	public int setBoardCells(int row, int column, int givenInt) {
-		int value=((row-1)*9)+(column-1);
-		return givenInt;
+	
+	public void setBoardCells(int cellNumber, int givenInt) {
+		boardCells[cellNumber]=givenInt;
 	}
 	
-	//done this works correctly when it is in the file with the array
-	 public void toString(int[] boardCells) {//print the board in 2d format
-		 int j=0,i=0,x=0;
-		 while(i<totalWidth) {
-			 while(j<9){
-				 System.out.print(boardCells[x]);
-				 j++;
-				 x++;
-			 }
-			 j=0;
-			 i++;
-			 System.out.println("\n");
-		 }
+	 public String toString(int boardCells) {
+		 StringBuilder sb = new StringBuilder();
+		 int size=this.width;
+		for(int i=0; i<this.boardCells.length; i++) {
+			sb.append(boardCells[i]);
+			if(i%size==0)
+				sb.append("\n");
+		}
+		 return sb.toString();
 	}
-	 //needed this to make sure a negative or a number larger than the grid size was not entered
-	 public void cellNumberError() {
-			System.out.println("That is not a valid cell number for the grid");
-			System.exit(0);
-	 }
 	
 }
