@@ -17,6 +17,7 @@ public class MainBalasi {
 			SudokuToSatReducerBalasi sudBoard = new SudokuToSatReducerBalasi(file);
 			sudBoard.createBoard(file);
 			sudBoard.reduceBoard();
+			//sudBoard.atleastOneInBox();
 		}
 	}
 

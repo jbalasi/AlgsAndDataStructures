@@ -28,9 +28,22 @@ public class SudokuBoardBalasi {
 	}
 	//done
 	public int box(int cellNumber) {//the box in which the cell lies in the 2d form of the soduku board???
-		int box=0;
-		
-		return box;
+		if(cellNumber ==0) {
+			return 0;
+		}
+		return ((column(cellNumber)/this.width)+this.height * (row(cellNumber)/this.width));
+	}
+	
+	int[] getBoxValues(int boxNumber){
+		int[] arr = new int[9];
+		int arrCount=0;
+		for(int i=0; i<81; i++) {
+			if(box(i)== boxNumber) {
+				arr[arrCount]=i;
+				arrCount++;
+			}
+		}
+		return arr;
 	}
 	
 	//getters, setters and print

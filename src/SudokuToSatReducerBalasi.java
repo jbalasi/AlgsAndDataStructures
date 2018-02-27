@@ -14,6 +14,7 @@ public class SudokuToSatReducerBalasi {
 	TimerBalasi timer = new TimerBalasi();
 	int width, height;
 	String  tempFileName  = "temp.cnf";
+	SudokuBoardBalasi board;
 //	try {
 //		Writer  writer=new PrintWriter("SATFile.txt");
 //	}catch(IOException e) {
@@ -49,7 +50,7 @@ public class SudokuToSatReducerBalasi {
 				this.width = Integer.parseInt(scan.next());
 				this.height = Integer.parseInt(scan.next());
 				
-				SudokuBoardBalasi board= new SudokuBoardBalasi(width, height);
+				this.board= new SudokuBoardBalasi(width, height);
 				
 				for(int i=0; i<board.boardCells.length; i++) {
 					int num = Integer.parseInt(scan.next());
@@ -68,72 +69,101 @@ public class SudokuToSatReducerBalasi {
 
 	public void reduceBoard() {
 		timer.start();//call timer start 
-//		atleastOneInRow();
-//		atmostOneInRow();
-//		atLeastOneInCol();
-//		atMostOneInCol();
-//		atleastOneInBox();
-//		atmostOneInBox();
+		atleastOneInRow();
 		timer.stop();//call timer stop
 		System.out.println("This ran for "+timer.getDuration()+"ms.");
 	}
 	
 	//i = row, j= column, k=value
 	public void atleastOneInRow() {
+		int [] row = new int[9];
+		int[] box = new int[9];
 		for(int k=1; k<=boardSize; k++) {
 			for(int i=0; i<boardSize; i++) {
 				for(int j=0; j<boardSize; j++) {
+					System.out.println("");
 					System.out.print(String.valueOf(encode(i,j,k)) + " ");
+					row[i]=(encode (board.row(box[i]),board.column(box[i]),k));
 				}
 				System.out.print(" 0");
 				System.out.println("");
 			}
-		}
+		}atmostOneInRow(row);
 	}
 	
 	
-	public void atmostOneInRow() {						//check this
+	public void atmostOneInRow(int[] row) {	
+		row= new int[9];
+		int[] box = new int[9];
 			for(int i=0; i<boardSize; i++) {
 				for(int j=0; j<boardSize; j++) {
-					for(int k=9; k>0; k--) {
+					for(int k=1; k>9; k++) {
 						System.out.print(String.valueOf(encode(i,j,k))+" ");
+						row[i]=(encode (board.row(box[i]),board.column(box[i]),k));
 				}
 				System.out.print(" 0");
 				System.out.println("");	
 			}
-		}
+		}atLeastOneInCol(row);
 	}
 	
-	public void atLeastOneInCol() {
+	public void atLeastOneInCol(int[] row) {
+		row= new int[9];
+		int[] box = new int[9];
 		for(int k=1; k<boardSize; k++) {
 			for(int j=0; j<boardSize; j++) {
 				for(int i=0; i<boardSize; i++) {
-					System.out.print(String.valueOf(encode(i,j,k)));
+					System.out.print(String.valueOf(encode(i,j,k))+" ");
+					row[i]=(encode (board.row(box[i]),board.column(box[i]),k));
 				}
 				System.out.print(" 0");
 				System.out.println("");
 			}
-		}
+		}atMostOneInCol(row);
 	}
 	
-	public void atMostOneInCol() {				//check this
+	public void atMostOneInCol(int[] row) {				//check this
+		int[] arr= new int[9];
+		int[] box = new int[9];
 		for(int j=0; j<boardSize; j++) {
 			for(int i=0; i<boardSize; i++) {
 				for(int k=9; k>0; k--) {
 					System.out.print(String.valueOf(encode(i,j,k))+" ");
+					row[i]=(encode (board.row(box[i]),board.column(box[i]),k));
 			}
 			System.out.print(" 0");
 			System.out.println("");	
 		}
-	}
-	}
-	
-	public void atleastOneInBox() {
-	
+	}atleastOneInBox(row);
 	}
 	
-	public void atmostOneInBox() {
+	public void atleastOneInBox(int[] row) {
+		row =new int[9];
+		int[] box = new int[9];
+		for(int k=1; k<=9; k++) {
+			for(int j=0; j<9; j++) {
+				box= board.getBoxValues(j);
+				for(int i=0; i<9; i++) {
+					System.out.print(encode (board.row(box[i]),board.column(box[i]),k) + " ");
+					row[i]=(encode (board.row(box[i]),board.column(box[i]),k));
+				}
+				System.out.print(" 0");
+				atmostOneInBox(row);
+				System.out.println("");
+			}
+		}atmostOneInBox(row);
+	}
 	
+	public void atmostOneInBox(int[] arr) {
+		int k=0;
+		int []row =new int[9];
+		int[] box = new int[9];
+		for(int i=0; i<arr.length; i++) {
+			for(int j=i+1; j<arr.length; j++) {
+				System.out.println(-arr[i]+" "+-arr[j]);
+				row[i]=(encode (board.row(box[i]),board.column(box[i]),k));
+			}
+		}
 	}	
 	
 	private int encode(int i, int j, int k) {
@@ -148,13 +178,5 @@ public class SudokuToSatReducerBalasi {
 //               writer.flush();
 //         }  catch(IOException  e)  { }
 
-  public static void main(String[]args) {
-	  SudokuToSatReducerBalasi board = new SudokuToSatReducerBalasi();
-	 
-	 // board.atmostOneInRow();
-	 // board.atMostOneInCol();
-	 // board.atleastOneInRow();
-	 // board.atLeastOneInCol();
-  }
 	
 }
