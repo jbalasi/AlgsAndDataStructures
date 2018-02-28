@@ -20,7 +20,7 @@ public class SudokuToSatReducerBalasi {
 //	}catch(IOException e) {
 //		
 //	}
-	
+
 	int compare, row, column, value;
 	int boardSize = 9;
 	 

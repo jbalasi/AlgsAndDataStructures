@@ -19,6 +19,4 @@ public class MainBalasi {
 			sudBoard.reduceBoard();
 		}
 	}
-
-
 }
