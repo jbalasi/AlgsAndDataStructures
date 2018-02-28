@@ -23,10 +23,6 @@ public class SudokuToSatReducerBalasi {
 	
 	int compare, row, column, value;
 	int boardSize = 9;
-	
-	public  SudokuToSatReducerBalasi() {
-		//for testing
-	}
 	 
 	public SudokuToSatReducerBalasi(File file) {
 		createBoard(file);
@@ -81,7 +77,6 @@ public class SudokuToSatReducerBalasi {
 		for(int k=1; k<=boardSize; k++) {
 			for(int i=0; i<boardSize; i++) {
 				for(int j=0; j<boardSize; j++) {
-					System.out.println("");
 					System.out.print(String.valueOf(encode(i,j,k)) + " ");
 					row[i]=(encode (board.row(box[i]),board.column(box[i]),k));
 				}

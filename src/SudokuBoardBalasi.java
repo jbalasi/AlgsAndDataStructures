@@ -2,7 +2,7 @@ import java.io.File;
 
 public class SudokuBoardBalasi {
 	
-	private int width, height, size, numberOfCells, value, boardSize,row, column;
+	private int width, height, numberOfCells, boardSize;
 	int[] boardCells;
 	static File file;
 	
